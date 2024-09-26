@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;  
+  }
+  body{
+      background-color: black;
+      font-family: sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .container{
+      height: 50%;
+      width: 50%;
+      display: grid;
+      grid-template-rows: 35% 65% ;
+      align-items: center;
+      justify-content: center;
+      border: 3rem solid #1a1a1a;
+      border-radius: 3rem;
+  }
+  h1{
+      margin-top: 3rem;
+      font-size: 3.5rem;
+      text-align: center;
+      padding: 0 1rem;
+      border-bottom: 2px solid #1a1a1a;
+  } 
+  .gradient-text {
+      font-size: 3.5rem;
+      color: white;
+      text-shadow: 
+          1px 1px 2px #00dbde, 
+          2px 2px 3px #fc00ff;
+  }
+
+  .box{
+      height: 100%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .clock{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 0 .5rem;
+      width: 75%;
+      height: 8rem;
+      color: white;
+      background-color: #1a1a1a;
+      position: relative;
+      border-radius: 1rem;
+      font-size: 4rem;
+      overflow: hidden;
+  }
+  .clock p{
+      font-size: 1rem;
+  } 
+  .clock::before{
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 90%;
+      height: 8rem;
+      background: linear-gradient(0deg, transparent, transparent,#2370f5,#2370f5,#2370f5);
+      z-index: 1;
+      transform-origin: bottom right;
+      animation: animate 5s linear infinite;
+  } 
+  .clock::after{
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 90%;
+      height: 8rem;
+      background: linear-gradient(0deg, transparent, transparent,#b91fdc,#b91fdc,#b91fdc);
+      z-index: 1;
+      transform-origin: bottom right;
+      animation: animate 5s linear infinite;
+      animation-delay: -3s;
+  } 
+  @keyframes animate{
+      0%{
+          transform: rotate(0deg);
+      }
+      100%{
+          transform: rotate(360deg);
+      }
+  }
+  .time{
+      text-align: center;
+      padding-top: .6rem;
+      background-color: #0d0d0d;
+      width: 95%;
+      height: 95%;
+      border-radius: 1rem;
+      z-index: 1;
+  }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class=" gradient-text" id="day"></h1>
+        <div class="box">
+            <div class="clock">
+                <div class="time">
+                    <div id="hour">00</div>
+                    <p>hour</p>
+                </div>
+            </div>
+            <div class="clock">
+                <div class="time">
+                    <div id="minute">00</div>
+                    <p>minutes</p>
+                </div>
+            </div>
+            <div class="clock">
+                <div class="time">
+                    <div id="second">00</div>
+                    <p>seconds</p>
+                </div>
+            </div>
+            <div class="clock">
+                <div class="time">
+                    <div id="meridian">AM</div>
+                    <p>AM/PM</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const hour = document.getElementById('hour');
+const minute = document.getElementById('minute');
+const second = document.getElementById('second');
+const meridianDisplay = document.getElementById('meridian');
+const day = document.getElementById('day');
+const monthName = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+const clock = setInterval(function time() {
+    let today = new Date();
+    let d = today.getDate();
+    let m = today.getMonth();
+    let y = today.getFullYear();
+    let h = today.getHours();
+    let min = today.getMinutes();
+    let sec = today.getSeconds();
+
+    let meridian = h >= 12 ? 'PM' : 'AM';
+    h = h % 12;
+    h = h ? h : 12; 
+
+    hour.textContent = h < 10 ? `0${h}` : h;
+    minute.textContent = min < 10 ? `0${min}` : min;
+    second.textContent = sec < 10 ? `0${sec}` : sec;
+    meridianDisplay.textContent = meridian;
+
+    day.innerHTML = `${d} ${monthName[m]} ${y}`;
+}, 1000);
+    </script>
+</body>
+</html>
